@@ -1,5 +1,8 @@
 {
   "functions": {
+    "index.js": {
+      "includeFiles": "index.html,styles.css,client.js"
+    },
     "api/**/*.js": {
       "includeFiles": "prompt.md"
     }
