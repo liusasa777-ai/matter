@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "api/**/*.js": {
+      "includeFiles": "prompt.md"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/((?!api/.*).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
