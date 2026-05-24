@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Matter</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#mood" aria-label="Matter home">
+        <span>Matter</span>
+      </a>
+      <nav class="tabs" aria-label="主要导航">
+        <button class="tab active" data-view="mood">心情</button>
+        <button class="tab" data-view="notes">碎碎念</button>
+        <button class="tab" data-view="week">本周回顾</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="view active" id="mood-view" aria-labelledby="mood-title">
+        <div class="sr-only">
+          <h1 id="mood-title">把今天的碎片，轻轻放好</h1>
+          <p>写一句也可以。Matter 会把它整理成一张可以保存的今日便利贴。</p>
+        </div>
+
+        <div class="mood-layout">
+          <section class="input-panel" aria-label="心情输入">
+            <label for="mood-input">今天发生了什么</label>
+            <textarea id="mood-input" rows="12" placeholder="写一点也可以"></textarea>
+            <div class="input-actions">
+              <button class="primary-button" id="generate-note">生成今日便利贴</button>
+              <span class="status-text" id="generate-status" role="status"></span>
+            </div>
+          </section>
+
+          <section class="preview-panel" aria-label="今日便利贴预览">
+            <div class="panel-title-row">
+              <h2>今日便利贴</h2>
+              <span id="preview-time">尚未生成</span>
+            </div>
+            <article class="note-card style-soft-paper preview-card" id="preview-card">
+              <div class="tape tape-top"></div>
+              <textarea id="preview-content" placeholder="生成后的日记会出现在这里，也可以手动编辑。"></textarea>
+              <div class="note-meta">
+                <span id="preview-date"></span>
+                <span id="preview-clock"></span>
+              </div>
+              <div class="tag-row" id="preview-tags"></div>
+            </article>
+            <button class="secondary-button" id="save-note" disabled>保存</button>
+            <p class="toast" id="save-status" role="status"></p>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="notes-view" aria-labelledby="notes-title">
+        <div class="sr-only">
+          <h1 id="notes-title">碎碎念</h1>
+          <p>你的每一个想法都是一块磁石</p>
+        </div>
+
+        <div class="library-tools">
+          <input id="search-input" type="search" placeholder="搜索正文或标签" />
+          <div class="filter-row" id="tag-filters"></div>
+        </div>
+
+        <div class="notes-grid" id="notes-grid"></div>
+        <div class="empty-state" id="notes-empty">还没有找到相关便笺。</div>
+      </section>
+
+      <section class="view" id="week-view" aria-labelledby="week-title">
+        <div class="sr-only">
+          <h1 id="week-title">本周回顾</h1>
+          <p>回看最近 7 天，看看自己正在怎样变化。</p>
+        </div>
+
+        <div class="week-layout">
+          <section class="week-list-panel">
+            <div class="panel-title-row">
+              <h2>最近 7 天</h2>
+              <span id="week-count">0 条便笺</span>
+            </div>
+            <div id="week-list" class="week-list"></div>
+          </section>
+
+          <section class="analysis-panel">
+            <div class="panel-title-row">
+              <h2>本周分析</h2>
+              <button class="primary-button small" id="analyze-week">生成本周回顾</button>
+            </div>
+            <p class="status-text block" id="analysis-status"></p>
+            <div class="summary-grid" id="summary-grid"></div>
+            <article class="analysis-copy" id="analysis-copy">
+              记录够 3 条后，可以生成一次温和的本周复盘。
+            </article>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <template id="note-template">
+      <article class="note-card">
+        <div class="tape"></div>
+        <p class="note-content"></p>
+        <div class="note-meta"></div>
+        <div class="tag-row"></div>
+        <div class="note-actions">
+          <button data-action="edit">编辑</button>
+          <button data-action="delete">删除</button>
+        </div>
+      </article>
+    </template>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
