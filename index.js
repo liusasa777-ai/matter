@@ -15,7 +15,8 @@ const mimeTypes = {
 export default async function handler(req, res) {
   try {
     if (req.url === "/favicon.ico" || req.url === "/favicon.png") {
-      res.status(204).end();
+      res.statusCode = 204;
+      res.end();
       return;
     }
 
@@ -25,7 +26,7 @@ export default async function handler(req, res) {
     const filePath = join(rootDir, normalized);
 
     if (!filePath.startsWith(rootDir)) {
-      res.status(403).json({ error: "Forbidden" });
+      sendJson(res, 403, { error: "Forbidden" });
       return;
     }
 
@@ -33,14 +34,22 @@ export default async function handler(req, res) {
       const content = await readFile(filePath);
       res.setHeader("Content-Type", mimeTypes[extname(filePath)] || "application/octet-stream");
       res.setHeader("Cache-Control", "no-store");
-      res.status(200).send(content);
+      res.statusCode = 200;
+      res.end(content);
     } catch {
       const index = await readFile(join(rootDir, "index.html"));
       res.setHeader("Content-Type", "text/html; charset=utf-8");
-      res.status(200).send(index);
+      res.statusCode = 200;
+      res.end(index);
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Server error" });
+    sendJson(res, 500, { error: "Server error" });
   }
+}
+
+function sendJson(res, statusCode, payload) {
+  res.statusCode = statusCode;
+  res.setHeader("Content-Type", "application/json; charset=utf-8");
+  res.end(JSON.stringify(payload));
 }
