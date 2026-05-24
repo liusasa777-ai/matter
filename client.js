@@ -82,6 +82,10 @@ async function generateNote() {
 
   try {
     const result = await postJson("/api/ai/generate-note", { inputText, sourceType: "text" });
+    const tags = Array.isArray(result.tags) ? result.tags : [];
+    if (!result.diary || tags.length === 0) {
+      throw new Error("刚刚没整理好，再试一次");
+    }
     const now = new Date();
     draft = {
       content: result.diary,
@@ -90,7 +94,7 @@ async function generateNote() {
       generationMode: "ai_rewrite",
       date: formatDate(now),
       time: formatTime(now),
-      tags: result.tags,
+      tags,
       styleId: randomStyleId()
     };
     renderPreview();
@@ -293,7 +297,7 @@ function setStatus(element, text, isError = false) {
 
 function renderTags(container, tags, query = "") {
   container.innerHTML = "";
-  tags.forEach((tag) => {
+  (Array.isArray(tags) ? tags : []).forEach((tag) => {
     const span = document.createElement("span");
     span.className = "tag";
     span.innerHTML = highlight(tag, query);
