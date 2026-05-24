@@ -1,7 +1,7 @@
 {
   "functions": {
     "index.js": {
-      "includeFiles": "{index.html,styles.css,client.js}"
+      "includeFiles": "{index.html,styles.css,client.js,prompt.md,api/_lib/ai.js}"
     },
     "api/**/*.js": {
       "includeFiles": "prompt.md"

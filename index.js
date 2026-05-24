@@ -70,7 +70,7 @@ export default async function handler(req, res) {
     }
   } catch (error) {
     console.error(error);
-    sendJson(res, 500, { error: "Server error" });
+    sendJson(res, error.statusCode || 500, { error: error.message || "Server error" });
   }
 }
 
